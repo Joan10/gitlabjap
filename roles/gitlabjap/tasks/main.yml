@@ -67,6 +67,12 @@
   tags:
     - always
 
+- name: Restart network service. For some reason weirdly needed beforce next step.
+  service: name=NetworkManager state=restarted
+  tags:
+    - config
+    - network
+
 - nmcli:
     conn_name: eth0
     type: ethernet
