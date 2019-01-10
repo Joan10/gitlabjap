@@ -167,3 +167,36 @@
     - docker
 
 
+- name: Install python
+  yum:
+    name: python
+    state: present
+  tags:
+    - config
+    - docker
+
+- name: Install docker-py
+  yum:
+    name: python-docker-py
+    state: present
+  tags:
+    - config
+    - docker
+
+
+- name: Install PyYAML
+  yum:
+    name: PyYAML
+    state: present
+  tags:
+    - config
+    - docker
+
+- name: Deploy Ansible SSH Key in authorized_keys
+  authorized_key:
+    user: root
+    state: present
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDBPPhUSMrjI0gVk2hjV5o5z07HgeNQfa/iafkOE6PP04khMhaoTYdgpqDWT27rAxCK2apkCXjMB9FhRhiQ5p+Yuv4R+Uw0LphibpYc+dCD5Prp9yJxC8LOp1oMEiqyAneABIH2Kaz5O9i9D7f6aNVg4PCO6UqX7bDoIuBBHnnzzdVeTCV2K1r84yHKRBtXdJq/dC9EjwBtUbGABiB4vhhgnYJuyiFl5Iap8Ib2LW5di8NhwS5wp7GgK5YLGZb+09YGk0pDdGthWu+LoEmYmKNALcUhAVWj7C9Be97crIuuGNWy69FdTkaCpwSJPT+jW2bMXXF83UZUP5X7ZiR43Eyd root@ansible"
+  tags:
+    - config
+
