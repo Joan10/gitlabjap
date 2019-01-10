@@ -1,0 +1,11 @@
+config/gitlab-secrets.json
+config/ssh_host_ecdsa_key
+config/ssh_host_ecdsa_key.pub
+config/ssh_host_ed25519_key
+config/ssh_host_ed25519_key.pub
+config/ssh_host_rsa_key
+config/ssh_host_rsa_key.pub
+config/ssl/
+data/
+logs/
+.env

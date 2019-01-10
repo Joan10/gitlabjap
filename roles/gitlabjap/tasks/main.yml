@@ -1,0 +1,163 @@
+- name: Install local dependencies
+  local_action: command yum -y install python2-pyvmomi
+  tags:
+    - always
+
+
+- name: Clone a virtual machine from Template and customize
+  vmware_guest:
+    hostname: "{{ VMWARE_HOST }}"
+    username: "{{ VMWARE_USER }}"
+    password: "{{ VMWARE_PASSWORD }}"
+    validate_certs: False
+    datacenter: "{{ VMWARE_DATACENTER }}"
+    cluster: "{{ VMWARE_CLUSTER }}"
+    name: "{{ hostname }}"
+    template: "{{ template_name }}"
+    folder: "{{ template_folder }}"
+    networks:
+    - name: "{{ network }}"
+      ip: "{{ ip }}"
+      netmask: "{{ netmask }}"
+      gateway: "{{ gateway }}"
+  delegate_to: localhost
+  tags:
+    - vsphere
+    - create
+
+- name: Move Virtual Machine
+  vmware_guest_move:
+    hostname: "{{ VMWARE_HOST }}"
+    username: "{{ VMWARE_USER }}"
+    password: "{{ VMWARE_PASSWORD }}"
+    datacenter: "{{ VMWARE_DATACENTER }}"
+    validate_certs: no
+    name: "{{ hostname }}"
+    dest_folder: "{{ destination_folder }}"
+  delegate_to: localhost
+  register: facts
+  tags:
+    - vsphere
+    - move
+
+- name: Poweron Virtual Machine
+  vmware_guest:
+    hostname: "{{ VMWARE_HOST }}"
+    username: "{{ VMWARE_USER }}"
+    password: "{{ VMWARE_PASSWORD }}"
+    datacenter: "{{ VMWARE_DATACENTER }}"
+    validate_certs: no
+    name: "{{ hostname }}"
+    state: poweredon
+  delegate_to: localhost
+  register: facts
+  tags:
+    - vsphere
+    - poweron
+
+
+- name: Wait for system to become reachable over WinRM
+    wait_for_connection:
+      timeout: 900
+  tags:
+    - vsphere
+
+- name: Gather facts for first time
+    setup:
+  tags:
+    - always
+
+- nmcli:
+    conn_name: eth0
+    type: ethernet
+    dns4:
+      - "{{ eth0_dnsserver }}"
+    state: present
+  tags:
+    - config
+    - network
+
+- name: Restart network service
+  service: name=NetworkManager state=restarted
+  tags:
+    - config
+    - network
+
+- name: YUM update
+  command: yum -y update
+  tags:
+    - config
+    - pkgupdate
+
+- name: Check if EPEL repo is already configured.
+  stat: path={{ epel_repofile_path }}
+  register: epel_repofile_result
+  tags:
+    - config
+    - epel
+ 
+- name: Install EPEL repo.
+  yum:
+    name: "{{ epel_repo_url }}"
+    state: present
+  register: result
+  when: not epel_repofile_result.stat.exists
+  tags:
+    - config
+    - epel
+ 
+- name: Import EPEL GPG key.
+  rpm_key:
+    key: "{{ epel_repo_gpg_key_url }}"
+    state: present
+  when: not epel_repofile_result.stat.exists
+  tags:
+    - config
+    - epel
+
+- hostname:
+    name: "{{ hostname }}"
+
+- name: update hosts
+  template: src=hosts.j2 dest=/etc/hosts backup=yes owner=root group=root mode=0644
+  tags: 
+    - config
+    - hosts
+   
+- name: be sure ntp is installed
+  yum: name=ntp state=installed
+  tags: 
+    - config
+    - ntp
+
+- name: be sure ntp is configured
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  notify:
+    - restart ntpd
+  tags: 
+    - config
+    - ntp
+
+- name: be sure ntpd is running and enabled
+  service: name=ntpd state=started enabled=yes
+  tags: 
+    - config
+    - ntp
+
+- name: Install docker
+  yum:
+    name: docker
+    state: present
+  tags: 
+    - config
+    - docker
+
+- name: Install docker-compose
+  yum:
+    name: docker-compose
+    state: present
+  tags: 
+    - config
+    - docker
+
+

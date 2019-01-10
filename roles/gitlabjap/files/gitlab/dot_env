@@ -1,0 +1,3 @@
+GITLAB_RAILS_SMTP_USER_NAME=user@example.com
+GITLAB_RAILS_SMTP_PASSWORD=YourSecretPassword
+GITLAB_RAILS_SMTP_EMAIL_FROM=user@example.com

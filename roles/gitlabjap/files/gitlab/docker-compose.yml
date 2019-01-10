@@ -1,0 +1,26 @@
+version: "2"
+
+services:
+  web:
+    image: gitlab/gitlab-ce:latest
+    restart: always
+    hostname: 'gitlabjap'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://10.80.87.152'
+        sidekiq['concurrency'] = 4
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = 'smtp.uib.es'
+        gitlab_rails['smtp_port'] = 25
+        gitlab_rails['smtp_authentication'] = 'plain'
+        gitlab_rails['smtp_enable_starttls_auto'] = true
+        gitlab_rails['smtp_domain'] = 'smtp.uib.es'
+        gitlab_rails['gitlab_email_from'] = 'gitlabjap@uib.es'
+        gitlab_rails['gitlab_email_reply_to'] = 'noreply@uib.es'
+    ports:
+      - "10080:80"
+      - "10022:22"
+    volumes:
+      - ./config:/etc/gitlab
+      - ./logs:/var/log/gitlab
+      - ./data:/var/opt/gitlab
