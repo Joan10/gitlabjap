@@ -63,7 +63,7 @@
     - vsphere
 
 - name: Gather facts for first time
-    setup:
+  setup:
   tags:
     - always
 
