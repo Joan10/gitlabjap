@@ -238,3 +238,12 @@
     - config
     - users
  
+- name: Expiring password for user "{{ item.name }}"
+  shell: chage -d 0 "{{ item.name }}"
+  with_items:
+    - "{{ users }}"
+  tags:
+    - config
+    - users
+
+
