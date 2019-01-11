@@ -222,7 +222,7 @@
     append: yes
   with_items:
     - "{{ users }}"
-  when: item.sudo == "yes"
+  when: item.sudo
   tags:
     - config
     - users
