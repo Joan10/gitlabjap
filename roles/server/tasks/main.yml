@@ -209,7 +209,7 @@
     groups: "{{ item.group | default([]) }}"
     append: yes
   with_items:
-    - {{ users }}
+    - "{{ users }}"
   tags:
     - config
     - users
@@ -221,7 +221,7 @@
     groups: wheel
     append: yes
   with_items:
-    - {{ users }}
+    - "{{ users }}"
   when: item.sudo == "yes"
   tags:
     - config
@@ -233,7 +233,7 @@
     state: present
     key: "{{ item.key }}"
   with_items:
-    - {{ users }}
+    - "{{ users }}"
   tags:
     - config
     - users
