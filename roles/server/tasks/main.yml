@@ -192,6 +192,22 @@
     - config
     - docker
 
+- name: Install Pip
+  yum:
+    name: python-pip
+    state: present
+  tags:
+    - config
+    - docker
+
+- name: Install pip docker-compose
+  pip:
+    name: docker-compose
+  tags:
+    - config
+    - docker
+
+
 - name: Deploy Ansible SSH Key in authorized_keys
   authorized_key:
     user: root

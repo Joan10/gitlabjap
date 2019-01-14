@@ -72,6 +72,8 @@
   tags: 
     - docker
 
+
+
 - name: Start docker service
   docker_service:
     project_name: flask
