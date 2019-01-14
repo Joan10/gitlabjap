@@ -167,7 +167,7 @@
     groups: "{{ item.group | default([]) }}"
     append: yes
   with_items:
-    - "{{ users }}"
+    - "{{ users | default([]) }}"
   tags:
     - config
     - users
@@ -178,7 +178,7 @@
     name: "{{ item.name }}"
     password: "{{ item.pass | default([]) }}"
   with_items:
-    - "{{ secret_users_pass }}"
+    - "{{ secret_users_pass | default([]) }}"
   tags:
     - config
     - users
@@ -191,7 +191,7 @@
     groups: wheel
     append: yes
   with_items:
-    - "{{ users }}"
+    - "{{ users | default([]) }}"
   when: item.sudo
   tags:
     - config
@@ -203,7 +203,7 @@
     state: present
     key: "{{ item.key }}"
   with_items:
-    - "{{ users }}"
+    - "{{ users | default([]) }}"
   tags:
     - config
     - users
