@@ -9,4 +9,5 @@ users:
    name: joan
    sudo: True
    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDddNTqzt91lsR5nQu4cVmpVf/6/XDYmXD0EZd+4X9vfggw7/Ho9oQtEex3gmkajMfvG0HS+Dmio+bkIO0n+maubro/ptNPcn8AWFtnjrG8rIKmmxN9jic9Rlh+NSQax8Oi9077LhmhpPEGUjXvAIqyUlAOelp7XFU9zk4gkMrHdUOCkeKPdO9uLJ61bOX16D4UmK58CBunEbz8fO9nDQxNE38KRA7HLNDQDphENFWuLdENbj/FhZayI77G+WKSDryNQPkT16hJHyA8hSyJXrZdD01hZjUnxy7h/kdJwCvBX1sec98eAzfOtqAj9iW/WUEIhL9Y9/5Kj74dKuXilHvl jdeu@pc-jdeu"   
-   
+
+docker_gitlab_dir: "/srv/gitlab"
