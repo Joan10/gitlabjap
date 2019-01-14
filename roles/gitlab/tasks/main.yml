@@ -62,7 +62,7 @@
             - "10080:80"
             - "10022:22"
           volumes:
-            - "{{ docker_gitlab_dir }}"/config:/etc/gitlab
-            - "{{ docker_gitlab_dir }}"/logs:/var/log/gitlab
-            - "{{ docker_gitlab_dir }}"/data:/var/opt/gitlab
+            - "{{ docker_gitlab_dir }}/config:/etc/gitlab"
+            - "{{ docker_gitlab_dir }}/logs:/var/log/gitlab"
+            - "{{ docker_gitlab_dir }}/data:/var/opt/gitlab"
 
