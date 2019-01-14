@@ -36,7 +36,8 @@
   tags:
     - docker
 
-- docker_service:
+- name: Start docker service
+  docker_service:
     project_name: flask
     definition:
       version: '2'
@@ -65,4 +66,7 @@
             - "{{ docker_gitlab_dir }}/config:/etc/gitlab"
             - "{{ docker_gitlab_dir }}/logs:/var/log/gitlab"
             - "{{ docker_gitlab_dir }}/data:/var/opt/gitlab"
+
+  tags:
+    - docker
 
