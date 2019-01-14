@@ -214,6 +214,18 @@
     - config
     - users
 
+
+- name: Add local users password
+  user:
+    name: "{{ item.name }}"
+    password: "{{ item.pass | default([]) }}"
+  with_items:
+    - "{{ users_pass }}"
+  tags:
+    - config
+    - users
+
+
 - name: Add local users to sudo
   user:
     name: "{{ item.name }}"
@@ -238,12 +250,12 @@
     - config
     - users
  
-- name: Expiring password for user "{{ item.name }}"
-  shell: chage -d 0 "{{ item.name }}"
-  with_items:
-    - "{{ users }}"
-  tags:
-    - config
-    - users
+#- name: Expiring password for user "{{ item.name }}"
+#  shell: chage -d 0 "{{ item.name }}"
+#  with_items:
+#    - "{{ users }}"
+#  tags:
+#    - config
+#    - users
 
 

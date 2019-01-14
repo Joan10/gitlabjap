@@ -6,12 +6,27 @@ Globals (Infraestructura)
 VMWARE_DATACENTER
 VMWARE_CLUSTER
 
+Globals (Accounting)
+=========================
+
+users: llista d'usuaris amb camps
+
+name: Nom
+sudo: True o False
+key: clau SSH
+
+
+
+
 Secretes (Emprau credencials AWX o Ansible Vault)
 =========================
 
 VMWARE_HOST 
 VMWARE_USER
 VMWARE_PASSWORD
+users_pass: llista d'usuaris amb camps:
+pass: md5sum de la contrasenya 
+
 
 Locals (Per màquina)
 ====================
