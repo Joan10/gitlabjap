@@ -32,7 +32,38 @@
     src: gitlab/
     dest: "{{ docker_gitlab_dir }}"
     recursive: yes
-    delete: yes
+    delete: no
+  tags:
+    - docker
+
+
+- name: Creates directory "{{ docker_gitlab_dir }}/config"
+  file:
+    path: "{{ docker_gitlab_dir }}/config"
+    state: directory
+    owner: steve
+    group: steve
+    mode: 0775
+  tags:
+    - docker
+
+- name: Creates directory "{{ docker_gitlab_dir }}/logs"
+  file:
+    path: "{{ docker_gitlab_dir }}/logs"
+    state: directory
+    owner: steve
+    group: steve
+    mode: 0775
+  tags:
+    - docker
+
+- name: Creates directory "{{ docker_gitlab_dir }}/data"
+  file:
+    path: "{{ docker_gitlab_dir }}/data"
+    state: directory
+    owner: steve
+    group: steve
+    mode: 0775
   tags:
     - docker
 
