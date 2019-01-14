@@ -175,10 +175,10 @@
     - config
     - docker
 
-- name: Install docker-py
+- name: Uninstall docker-py to avoid corruption
   yum:
     name: python-docker-py
-    state: present
+    state: absent
   tags:
     - config
     - docker
@@ -200,12 +200,20 @@
     - config
     - docker
 
+- name: Install pip docker module
+  pip:
+    name: docker
+  tags:
+    - config
+    - docker
+
 - name: Install pip docker-compose
   pip:
     name: docker-compose
   tags:
     - config
     - docker
+
 
 
 - name: Deploy Ansible SSH Key in authorized_keys
