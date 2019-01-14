@@ -1,3 +1,60 @@
+
+- name: Install docker
+  yum:
+    name: docker
+    state: present
+  tags: 
+    - docker
+
+- name: Install docker-compose
+  yum:
+    name: docker-compose
+    state: present
+  tags: 
+    - docker
+
+
+- name: Install python
+  yum:
+    name: python
+    state: present
+  tags:
+    - docker
+
+- name: Uninstall docker-py to avoid corruption
+  yum:
+    name: python-docker-py
+    state: absent
+  tags:
+    - docker
+
+
+- name: Install PyYAML
+  yum:
+    name: PyYAML
+    state: present
+  tags:
+    - docker
+
+- name: Install Pip
+  yum:
+    name: python-pip
+    state: present
+  tags:
+    - docker
+
+- name: Install pip docker module
+  pip:
+    name: docker
+  tags:
+    - docker
+
+- name: Install pip docker-compose
+  pip:
+    name: docker-compose
+  tags:
+    - docker
+
 - name: Add user docker to run containers
   user:
     name: steve #nom en honor als estibadors. Stevedore en angles
@@ -7,7 +64,7 @@
   tags:
     - docker
 
-- name: Resolvconf file
+- name: Docker config file
   copy:
     src: etc/docker/daemon.json
     dest: /etc/docker/daemon.json
@@ -73,7 +130,6 @@
     - docker
 
 
-
 - name: Start docker service
   become: yes
   become_user: steve
@@ -88,7 +144,7 @@
           hostname: 'gitlabjap'
           environment:
             GITLAB_OMNIBUS_CONFIG: |
-              external_url 'http://10.80.87.152'
+              external_url 'http://{{ hostname }}'
               sidekiq['concurrency'] = 4
               gitlab_rails['smtp_enable'] = true
               gitlab_rails['smtp_address'] = 'smtp.uib.es'

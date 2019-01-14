@@ -6,9 +6,9 @@
 
 - name: Clone a virtual machine from Template and customize
   vmware_guest:
-    hostname: "{{ VMWARE_HOST }}"
-    username: "{{ VMWARE_USER }}"
-    password: "{{ VMWARE_PASSWORD }}"
+    hostname: "{{ secret_vmware_host }}"
+    username: "{{ secret_vmware_user }}"
+    password: "{{ secret_vmware_password }}"
     validate_certs: False
     datacenter: "{{ VMWARE_DATACENTER }}"
     cluster: "{{ VMWARE_CLUSTER }}"
@@ -27,9 +27,9 @@
 
 - name: Move Virtual Machine
   vmware_guest_move:
-    hostname: "{{ VMWARE_HOST }}"
-    username: "{{ VMWARE_USER }}"
-    password: "{{ VMWARE_PASSWORD }}"
+    hostname: "{{ secret_vmware_host }}"
+    username: "{{ secret_vmware_user }}"
+    password: "{{ secret_vmware_password }}"
     datacenter: "{{ VMWARE_DATACENTER }}"
     validate_certs: no
     name: "{{ hostname }}"
@@ -42,9 +42,9 @@
 
 - name: Poweron Virtual Machine
   vmware_guest:
-    hostname: "{{ VMWARE_HOST }}"
-    username: "{{ VMWARE_USER }}"
-    password: "{{ VMWARE_PASSWORD }}"
+    hostname: "{{ secret_vmware_host }}"
+    username: "{{ secret_vmware_user }}"
+    password: "{{ secret_vmware_password }}"
     datacenter: "{{ VMWARE_DATACENTER }}"
     validate_certs: no
     name: "{{ hostname }}"
@@ -150,72 +150,6 @@
     - config
     - ntp
 
-- name: Install docker
-  yum:
-    name: docker
-    state: present
-  tags: 
-    - config
-    - docker
-
-- name: Install docker-compose
-  yum:
-    name: docker-compose
-    state: present
-  tags: 
-    - config
-    - docker
-
-
-- name: Install python
-  yum:
-    name: python
-    state: present
-  tags:
-    - config
-    - docker
-
-- name: Uninstall docker-py to avoid corruption
-  yum:
-    name: python-docker-py
-    state: absent
-  tags:
-    - config
-    - docker
-
-
-- name: Install PyYAML
-  yum:
-    name: PyYAML
-    state: present
-  tags:
-    - config
-    - docker
-
-- name: Install Pip
-  yum:
-    name: python-pip
-    state: present
-  tags:
-    - config
-    - docker
-
-- name: Install pip docker module
-  pip:
-    name: docker
-  tags:
-    - config
-    - docker
-
-- name: Install pip docker-compose
-  pip:
-    name: docker-compose
-  tags:
-    - config
-    - docker
-
-
-
 - name: Deploy Ansible SSH Key in authorized_keys
   authorized_key:
     user: root
@@ -244,7 +178,7 @@
     name: "{{ item.name }}"
     password: "{{ item.pass | default([]) }}"
   with_items:
-    - "{{ users_pass }}"
+    - "{{ secret_users_pass }}"
   tags:
     - config
     - users
