@@ -75,13 +75,14 @@
 
 
 - name: Start docker service
+  become: yes
+  become_user: steve
   docker_service:
-    project_name: flask
+    project_name: gitlab
     definition:
       version: '2'
       services:
         web:
-          user: "steve:steve"
           image: gitlab/gitlab-ce:latest
           restart: always
           hostname: 'gitlabjap'
