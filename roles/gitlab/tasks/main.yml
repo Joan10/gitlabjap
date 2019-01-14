@@ -67,6 +67,11 @@
   tags:
     - docker
 
+- name: be sure docker is running and enabled
+  service: name=docker state=started enabled=yes
+  tags: 
+    - docker
+
 - name: Start docker service
   docker_service:
     project_name: flask
